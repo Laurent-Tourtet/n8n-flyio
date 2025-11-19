@@ -1,0 +1,19 @@
+app = "GESTFACT"
+primary_region = "cdg"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  TZ = "Europe/Paris"
+  GENERIC_TIMEZONE = "Europe/Paris"
+  N8N_PORT = "5678"
+  N8N_HOST = "0.0.0.0"
+  N8N_PROTOCOL = "https"
+  WEBHOOK_URL = "https://GESTFACT.fly.dev"
+  N8N_EDITOR_BASE_URL = "https://GESTFACT.fly.dev"
+  N8N_ENCRYPTION_KEY = "CHANGE_ME_KEY"
+
+[[mounts]]
+  source="n8n_data"
+  destination="/home/node/.n8n"
