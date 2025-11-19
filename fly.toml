@@ -1,19 +1,42 @@
-app = "GESTFACT"
+# fly.toml app configuration file for n8n-laurent
+
+app = "n8n-laurent"
 primary_region = "cdg"
 
 [build]
   dockerfile = "Dockerfile"
 
 [env]
-  TZ = "Europe/Paris"
+  # Authentification Basic
+  N8N_BASIC_AUTH_ACTIVE = "true"
+  N8N_BASIC_AUTH_USER = "admin"
+  N8N_BASIC_AUTH_PASSWORD = "TonMotDePasseSecurise"
+
+  # Timezone
   GENERIC_TIMEZONE = "Europe/Paris"
-  N8N_PORT = "5678"
+  TZ = "Europe/Paris"
+
+  # N8N configuration
+  N8N_EDITOR_BASE_URL = "https://n8n-laurent.fly.dev"
+  N8N_ENCRYPTION_KEY = "194150FF1B343EBE4CFA0B77981F4C32596B1995637DC61D662C7FDDC49AEB68"
   N8N_HOST = "0.0.0.0"
+  N8N_PORT = "5678"
   N8N_PROTOCOL = "https"
-  WEBHOOK_URL = "https://GESTFACT.fly.dev"
-  N8N_EDITOR_BASE_URL = "https://GESTFACT.fly.dev"
-  N8N_ENCRYPTION_KEY = "CHANGE_ME_KEY"
+  WEBHOOK_URL = "https://n8n-laurent.fly.dev"
 
 [[mounts]]
-  source="n8n_data"
-  destination="/home/node/.n8n"
+  source = "n8n_data"
+  destination = "/home/node/.n8n"
+
+[http_service]
+  internal_port = 5678
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1    # Il faut au moins 1 machine active
+  processes = ["app"]
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
